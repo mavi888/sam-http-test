@@ -2,11 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 
 Resources:
-
-  MyApi:
-    Type: AWS::Serverless::Api
-    Properties:
-      StageName: dev
     
   HelloFunction:
     Type: 'AWS::Serverless::Function'
@@ -16,21 +11,7 @@ Resources:
       CodeUri: ./hello
       Events:
         HelloAPI:
-          Type: Api
+          Type: HttpApi
           Properties:
-            RestApiId: !Ref MyApi
             Path: /hello
             Method: GET
-  
-Outputs:
-  Region:
-    Description: "Region"
-    Value: !Ref AWS::Region
-
-  ApiId:
-    Description: "API ID"
-    Value: !Ref MyApi
-
-  ApiUrl:
-    Description: "API endpoint URL for Prod environment"
-    Value: !Sub 'https://${MyApi}.execute-api.${AWS::Region}.amazonaws.com/dev/'
